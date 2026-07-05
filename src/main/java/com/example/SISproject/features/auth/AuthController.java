@@ -2,7 +2,7 @@ package com.example.SISproject.features.auth;
 
 import com.example.SISproject.features.auth.dto.AuthResponse;
 import com.example.SISproject.features.auth.dto.LoginRequest;
-import com.example.SISproject.features.auth.dto.MeRequest;
+import com.example.SISproject.features.auth.dto.MeResponse;
 import com.example.SISproject.features.auth.dto.RegisterRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,8 +38,9 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<AuthResponse> me(@AuthenticationPrincipal UserDetails userDetails){
-        return ResponseEntity.ok(new AuthResponse("Welcome back " + userDetails.getUsername()));
+    public ResponseEntity<MeResponse> me(@AuthenticationPrincipal UserDetails userDetails){
+        MeResponse meResponse = authService.me(userDetails.getUsername());
+        return ResponseEntity.ok(meResponse);
     }
 
     private void createNewCookie(HttpServletResponse response,String token){

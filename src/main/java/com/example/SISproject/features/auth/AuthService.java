@@ -1,5 +1,7 @@
 package com.example.SISproject.features.auth;
 
+import com.example.SISproject.features.auth.dto.MeResponse;
+import com.example.SISproject.models.UserModel;
 import com.example.SISproject.repositories.UserRepository;
 import com.example.SISproject.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,16 @@ public class AuthService {
         } catch (AuthenticationException e) {
             return null;
         }
+    }
+
+    public MeResponse me(String email){
+        UserModel user = userRepository.findUserByEmail(email);
+        if (user == null) return null;
+        return new MeResponse(
+                user.getName(),
+                user.getEmail(),
+                user.getActivityStatus()
+        );
     }
 
     public String register(String username, String email, String password) {
