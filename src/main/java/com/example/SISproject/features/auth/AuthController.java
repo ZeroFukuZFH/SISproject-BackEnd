@@ -41,7 +41,7 @@ public class AuthController {
         jwtCookie.setHttpOnly(true);   // Protects against XSS
         jwtCookie.setSecure(true);    // Set to true in production (HTTPS)
         jwtCookie.setPath("/");        // Accessible globally across your API routes
-        jwtCookie.setMaxAge(Duration.ofHours(3).toMillisPart());
+        jwtCookie.setMaxAge((int) Duration.ofHours(3).toSeconds());
         jwtCookie.setAttribute("SameSite", "Strict");
         response.addCookie(jwtCookie);
     }
